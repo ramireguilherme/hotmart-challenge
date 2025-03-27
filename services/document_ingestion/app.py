@@ -1,16 +1,16 @@
 from fastapi import FastAPI
 import requests
 from utils import get_content_body, split_text
+
 app = FastAPI()
 
+# To do: add logging
+# 
 @app.get("/scrape")
 def scrape_webpage(url: str):
     response = requests.get(url)
     if response.status_code == 200:
         page_content = response.text
-        # save html content
-        with open("page.html", "w") as f:
-            f.write(page_content)
     else:
         print(f"Error processing page: {response.status_code}")
 

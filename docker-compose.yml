@@ -1,0 +1,11 @@
+services:
+  document_ingestion:
+    build:
+      context: ./services/document_ingestion
+      dockerfile: Dockerfile
+    container_name: document_ingestion
+    ports:
+      - "8000:8501" 
+    # depends_on:
+    #   - document_db
+
