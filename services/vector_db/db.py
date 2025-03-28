@@ -2,7 +2,8 @@ import chromadb as chroma
 import config
 import chromadb.utils.embedding_functions as embedding_functions
 import os
-
+import logging
+logging.basicConfig(level=logging.INFO)
 def init_db():
     openai_ef = embedding_functions.OpenAIEmbeddingFunction(
                 api_key=os.environ.get('OPENAI_API_KEY'),
@@ -21,6 +22,7 @@ def query_db(collection, query : str, k : int):
         query: The query text.
         k: The number of most similar text chunks to return.
     """
+    logging.info("Querying database")
     results = collection.query(
         query_texts=[query],
         n_results=k,

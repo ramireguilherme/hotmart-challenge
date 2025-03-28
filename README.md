@@ -47,6 +47,7 @@ Após a ingestão, você pode fazer uma pergunta para a base de conhecimento de 
 ```
 curl -G "http://localhost:8002/answer" -H "Content-Type: application/json" --data-urlencode "question=quais são os tipos de produtos digitais?"
 ```
-To do:
-- testes unitários 0/2
-- github actions (nice to have)
+
+```
+curl -G "http://localhost:8002/answer" -H "Content-Type: application/json" --data-urlencode "question=Quem fundou a Hotmart"
+```
