@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 import requests
 from llm import call_llm
-from typing import List
+
 PROMPT = '''
 Você possui acesso à informações retiradas do site oficial da empresa, esse conteúdo está delimitado pelas tags <infos> </infos>. Seu conhecimento é limitado a essas informações e elas devem ser utilizadas para responder as questões do usuário.
 Sua tarefa é utilizar as informações dos documentos para responder a pergunta do usuário da forma mais direta e técnica possível, com base unicamente nas informações fornecidas.

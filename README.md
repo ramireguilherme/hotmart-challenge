@@ -19,7 +19,7 @@ Frameworks: FastAPI por ser facilmente integrável com os modelos de ML e vector
 Banco de Vetores: ChromaDB (optei por utilizar esta ferramenta por ser open source e ter fácil implementação, além de já ter utilizado em projetos anteriormente)
 
 Modelos de ML: LangChain + OpenAI API (A princípios estava utilizando modelos da huggingface, contudo o desempenho em minha máquina estava sendo um gargalo na aplicação).
-Para armazenar os embeddings no vector_db o ChromaDB utiliza o MiniLM por padrão, que é um modelo leve e que exige poucos recursos computacionais, contudo o desempenho deste modelo em queries na língua portuguesa estava sendo inferior ao Ada (modelo nativo da openAI) então optei por trocà-lo também.
+Para armazenar os embeddings no vector_db o ChromaDB utiliza o MiniLM por padrão, que é um modelo leve e que exige poucos recursos computacionais, contudo o desempenho deste modelo em queries na língua portuguesa estava sendo inferior ao Ada (modelo nativo da openAI) então optei por trocá-lo também.
 
 Containerização: Docker + Docker Compose seguindo os requisitos do desafio.
 
@@ -38,8 +38,14 @@ Depois, rode a aplicação com:
 docker compose up
 ```
 
+## Testar a API
+```
+curl -X GET "http://127.0.0.1:8000/scrape?url=https://hotmart.com/pt-br/blog/como-funciona-hotmart"
+```
+```
+curl -G "http://localhost:8002/answer" -H "Content-Type: application/json" --data-urlencode "question=quais são os tipos de produtos digitais?"
+```
 To do:
 - add logging
-- arquivos teste
 - testes unitários 0/2
 - github actions (nice to have)
