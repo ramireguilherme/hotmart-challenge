@@ -1,11 +1,36 @@
 services:
+  vector_db:
+    build:
+      context: ./services/vector_db
+      dockerfile: Dockerfile
+    container_name: vector_db
+    ports:
+      - "8001:8001"
+    env_file:
+      - .env
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+    volumes:
+      - ./services/vector_db/data:/data
   document_ingestion:
     build:
       context: ./services/document_ingestion
       dockerfile: Dockerfile
     container_name: document_ingestion
     ports:
-      - "8000:8501" 
-    # depends_on:
-    #   - document_db
-
+      - "8000:8000" 
+    depends_on:
+       - vector_db
+  llm:
+    build:
+      context: ./services/llm
+      dockerfile: Dockerfile
+    container_name: llm
+    ports:
+      - "8002:8002"
+    depends_on:
+      - vector_db
+    env_file:
+      - .env
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}

@@ -1,1 +1,4 @@
+fastapi
+requests
 openai
+uvicorn
