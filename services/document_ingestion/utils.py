@@ -1,7 +1,7 @@
 from langchain_text_splitters import MarkdownHeaderTextSplitter, HTMLHeaderTextSplitter, CharacterTextSplitter
 from bs4 import BeautifulSoup
 from typing import List
-
+# to do: change chunking strategy
 def split_text(text: str) -> List[str]:
     """
     Splits a text into chunks of a given size.
