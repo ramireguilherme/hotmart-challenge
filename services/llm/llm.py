@@ -12,6 +12,5 @@ def call_llm(instructions: str, prompt : str):
     instructions=instructions,
     input=prompt,
     )
-    print("Response: ", response)
     response_text = response.output[0].content[0].text 
     return response_text

@@ -13,14 +13,6 @@ def split_text(text: str) -> List[str]:
     Returns:
         A list of text chunks.
     """
-    # headers_to_split_on = [
-    # ("h1", "Header 1"),
-    # ("h2", "Header 2"),
-    # ("h3", "Header 3"),
-    # ]
-    # splitter = HTMLHeaderTextSplitter(headers_to_split_on=headers_to_split_on)
-    # chunks = splitter.split(text)
-
     text_splitter = CharacterTextSplitter(
     separator="\n\n",
     chunk_size=1000,

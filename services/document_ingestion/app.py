@@ -29,7 +29,7 @@ def scrape_webpage(url: str):
     if response.status_code == 200:
         page_content = response.text
     else:
-        print(f"Error processing page: {response.status_code}")
+        logging.error(f"Error processing page: {response.status_code}")
 
     page_content = get_content_body(page_content)
     content_chunks = split_text(page_content)
