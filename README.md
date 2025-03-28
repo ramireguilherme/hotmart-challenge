@@ -39,13 +39,14 @@ docker compose up
 ```
 
 ## Testar a API
+Para testar a ingestão de dados da página, use o seguinte comeando do cURL
 ```
 curl -X GET "http://127.0.0.1:8000/scrape?url=https://hotmart.com/pt-br/blog/como-funciona-hotmart"
 ```
+Após a ingestão, você pode fazer uma pergunta para a base de conhecimento de maneira similar, por exemplo: 
 ```
 curl -G "http://localhost:8002/answer" -H "Content-Type: application/json" --data-urlencode "question=quais são os tipos de produtos digitais?"
 ```
 To do:
-- add logging
 - testes unitários 0/2
 - github actions (nice to have)
