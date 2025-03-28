@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 import requests
 from llm import call_llm
-
+import logging
 PROMPT = '''
 Você possui acesso à informações retiradas do site oficial da empresa, esse conteúdo está delimitado pelas tags <infos> </infos>. Seu conhecimento é limitado a essas informações e elas devem ser utilizadas para responder as questões do usuário.
 Sua tarefa é utilizar as informações dos documentos para responder a pergunta do usuário da forma mais direta e técnica possível, com base unicamente nas informações fornecidas.
@@ -14,6 +14,8 @@ As informações que você pode se embasar para responder a dúvida do usuário 
 Com base nas informações em <infos>, responda adequadamente ao usuário.
 
 '''
+VECTOR_DB_URL = "http://vector_db:8001/query"
+logging.basicConfig(level=logging.INFO)
 
 app = FastAPI()
 
@@ -24,15 +26,14 @@ def answer_question(question: str):
     '''
 
     # format the question with context
-    vec_db_url = "http://vector_db:8001/query"
-    vector_db_response = requests.get(vec_db_url, json={"query": question, "k": 10})
+    vector_db_response = requests.get(VECTOR_DB_URL, json={"query": question, "k": 10})
     retrieved_chunks = vector_db_response.json().get("results")
     chunk_list = retrieved_chunks['documents'][0]
     # transform the list into a string
     chunk_list = " ".join(chunk_list)
-    print("Formating question ...")
+    logging.info("Formating question ...")
     instructions = PROMPT.format(context=chunk_list)
-    print("Instructions", instructions)
+    logging.info("Instructions", instructions)
     # query the llm
     answer = call_llm(instructions, question)
 

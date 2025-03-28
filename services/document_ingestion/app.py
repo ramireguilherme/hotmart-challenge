@@ -1,10 +1,13 @@
 from fastapi import FastAPI
 import requests
 from utils import get_content_body, split_text
+import logging
 
 app = FastAPI()
-vec_db_url = "http://vector_db:8001/add"
-# To do: add logging
+VECTOR_DB_ENDPOINT = "http://vector_db:8001/add"
+
+logging.basicConfig(level=logging.INFO)
+
 @app.get("/scrape")
 def scrape_webpage(url: str):
     """
@@ -33,8 +36,8 @@ def scrape_webpage(url: str):
     # store in vector db
     for text_chunk in content_chunks:
         data = {"text_chunk": text_chunk.page_content}
-        response = requests.post(vec_db_url, json=data)
+        response = requests.post(VECTOR_DB_ENDPOINT, json=data)
         if response.status_code != 200:
-            print(f"Error storing text chunk: {response.status_code}")
+            logging.error(f"Error storing text chunk: {response.status_code}")
 
     return {"content": page_content}

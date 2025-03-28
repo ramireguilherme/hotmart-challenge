@@ -2,16 +2,19 @@ import uuid
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from typing import Optional
-from db import init_db, query_db , add_to_db
-
+from db import init_db, query_db
+import logging
 app = FastAPI()
 
 collection = None
 
+logging.basicConfig(level=logging.INFO)
 @app.on_event("startup")
 def startup_event():
+    logging.info("Initializing database")
     global collection
     collection = init_db()
+    logging.info("Database initialized")
 
 class AddRequest(BaseModel):
     text_chunk: str
@@ -27,6 +30,7 @@ def health_check():
 @app.post("/add")
 def add_to_db_endpoint(request: AddRequest):
     if not collection:
+        logging.error("Database not initialized")
         raise HTTPException(status_code=500, detail="Database not initialized")
     
     collection.add(documents=[request.text_chunk], ids=[str(uuid.uuid4())])

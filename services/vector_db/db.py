@@ -12,16 +12,6 @@ def init_db():
     collection = chroma_client.get_or_create_collection(name=config.COLLECTION_NAME, embedding_function=openai_ef)
     return collection
 
-def add_to_db(collection, text_chunk):
-    """
-    Adds a text chunk to the database collection.
-
-    Args:
-        collection: The database collection object.
-        text_chunk: The text chunk to be added.
-    """
-    document = {"text": text_chunk}
-    collection.add(document)
 
 def query_db(collection, query : str, k : int):
     """
